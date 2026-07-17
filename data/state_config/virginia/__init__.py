@@ -1,0 +1,1 @@
+from data.state_config.virginia import virginia_consumption_factor

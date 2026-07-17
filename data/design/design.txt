@@ -1,0 +1,59 @@
+1. We can look at a number of things.
+    - Should we load all of the data ahead of time.
+    - Should we look to measure whether the data we are processing is up-to-date
+    - Should we look to keep the data live.
+        - This includes checking that the data feeds are up to date.
+        - This means checking the last date in the dataset.
+2. A number of approaches were tried when trying to solve the problem.
+    1. We tried no auto-regression with just weather data.
+        - This seemed to work well.
+        - Error rate seemed to be at the 5% level without tuning.
+    2. We tried auto-regression where we had auto regression of weather values and other random variables.
+        - This ran into issues.
+        - With NUTS sampler, this would not even compile yielding the Scratchpad Ufunc.
+        - With Metropolis sampler, this would run but it would throw a User Fusion Warning and
+        numerical limit exceeded error.
+        - It ran with around 20 or so variables with the auto-regression setting.
+        - We can look at trying to exapand the auto-regressive aspect. Instead of hard-coding
+        the auto-regressive aspect, one can look at using the following:
+            - https://www.pymc.io/projects/docs/en/stable/api/distributions/generated/pymc.AR.html
+            - 
+
+
+
+2. In the development, we should look to add decorators and things of this sort.
+3. Likewise, we should aim to use dependency injection.
+4. We should aim to use mocking.
+5. https://realpython.com/python-mock-library/
+
+
+Mocking Information:
+--------------------
+
+Mocking in Python with unittest.mock allows you to simulate complex logic or unpredictable dependencies,
+such as responses from external services. You create mock objects to replace real ones in your tests,
+ensuring that your tests are isolated. The Mock class allows you to imitate real objects, and the patch()
+function lets you temporarily substitute mocks for real objects in your tests.
+
+
+    1. A mock in python is a substitute object that simulates a real object in a testing environment.
+    2. Mock differs from MagicMock in that MagicMock includes implementations of most magic mock methods.
+    3. The patch function() replaces real objects with mock instances, controlling scope of mocking.
+    4. You can assert if a Mock object was called with methods like .assert_called()
+    5. You set a mock's return value by setting the return_value on the object.
+
+
+
+We need to think about the architecture of the codebase more.
+
+We need to make sure that this architecture makes sense.
+    The key action with the architecture is the following.
+        - We can read in the data.
+        - We can look to combine (1) population, (2) wind, (3) weather to create the consumption.
+        - We can likely read all of this data in during initialization.
+        - and then place this in the relevant locations later.
+        - The idea is that the logic for this would be constrained at the state level.
+        - Hence, it is very virginia oriented.
+        - What can we look to do here.
+
+
