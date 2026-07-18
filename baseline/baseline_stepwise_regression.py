@@ -30,7 +30,7 @@ from sklearn.model_selection import train_test_split
 from scipy import stats
 import calendar
 from date_utils.date_utils import get_number_days_in_month
-from utils import get_base_path
+from utils_native import get_base_path
 import logging
 from collections import namedtuple
 from typing import Callable
