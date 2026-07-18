@@ -17,10 +17,10 @@
 import signal
 import sys
 from types import FrameType
-from baseline.baseline import calculate_eia_daily_values, ComponentType
+from baseline.baseline_stepwise_regression import calculate_eia_daily_values, ComponentType
 from flask import Flask, request, jsonify
 
-from utils.logging import logger
+#from .utils.logging import logger
 
 app = Flask(__name__)
 
@@ -30,8 +30,6 @@ def _validate(dates, cashflows):
 
 @app.route("/")
 def calculate_daily_natural_gas_consumption_values() -> str:
-    # Use basic logging with custom fields
-    logger.info(logField="custom-entry", arbitraryField="custom-entry")
 
     # Use request.args.get() to safely pull values (returns None if missing)
     start_date = request.args.get('start_date')
@@ -54,11 +52,6 @@ def calculate_daily_natural_gas_consumption_values() -> str:
 
 
 def shutdown_handler(signal_int: int, frame: FrameType) -> None:
-    logger.info(f"Caught Signal {signal.strsignal(signal_int)}")
-
-    from utils.logging import flush
-
-    flush()
 
     # Safely exit program
     sys.exit(0)
