@@ -29,7 +29,7 @@ def _validate(dates, cashflows):
     return True
 
 @app.route("/")
-def calculate_cash_flows() -> str:
+def calculate_daily_natural_gas_consumption_values() -> str:
     # Use basic logging with custom fields
     logger.info(logField="custom-entry", arbitraryField="custom-entry")
 
