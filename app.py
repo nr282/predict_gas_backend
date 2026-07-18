@@ -29,13 +29,25 @@ def _validate(dates, cashflows):
     return True
 
 @app.route("/")
-def calculate_daily_natural_gas_consumption_values() -> str:
+def calculate_daily_natural_gas_consumption_values():
 
     # Use request.args.get() to safely pull values (returns None if missing)
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     current_date = request.args.get('current_date')
     state = request.args.get('state')
+
+    print("State")
+    print(state)
+
+    print("Start date")
+    print(start_date)
+
+    print("End date")
+    print(end_date)
+
+    print("Current date")
+    print(current_date)
 
     daily_values = calculate_eia_daily_values(start_date,
                                               end_date,
@@ -47,7 +59,7 @@ def calculate_daily_natural_gas_consumption_values() -> str:
                                               ComponentType.RESIDENTIAL,
                                               state)
 
-    res = daily_values.to_dict()
+    res = daily_values.daily_eia_values.to_dict()
     return res
 
 
