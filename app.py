@@ -41,10 +41,10 @@ def calculate_daily_natural_gas_consumption_values() -> str:
 
     daily_values = calculate_eia_daily_values(start_date,
                                               end_date,
-                                              "2023-01-01",
+                                              "2009-01-01",
                                               "2025-09-30",
-                                              "2019-01-01",
-                                              "2022-12-31",
+                                              "2000-01-01",
+                                              "2008-12-31",
                                               current_date,
                                               ComponentType.RESIDENTIAL,
                                               state)
