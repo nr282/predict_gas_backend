@@ -19,7 +19,6 @@ TODO: After getting New York setup, we can move on to other states.
 """
 
 import pandas as pd
-from pymc.variational.callbacks import relative
 
 try:
     import python_weather
@@ -37,14 +36,13 @@ from collections import namedtuple
 
 from data.eia_consumption.eia_geography_mappings import abbrev_to_us_state, us_state_to_abbrev, \
     us_state_to_abbrev_supported_by_prescient
-from location import raw_name_to_standard_name, get_list_of_standardizied_name
 import logging
 from .mathematical_models_natural_gas import calculate_hdd, calculate_cdd, TemperatureType
 from utils import *
 from data.weather_mod.forecast.acquire_prescient import get_weather_data_for_all_states, get_weather_data_for_state
 import requests
 from io import StringIO
-import boto3
+from location import raw_name_to_standard_name, get_list_of_standardizied_name
 
 
 location = namedtuple('Location', ['Latitude', 'Longitude'])

@@ -49,35 +49,6 @@ def calculate_consumption_factor_diff(start_date,
     return weather_values[["Date", "Year", "Month", "Day", "diff"]]
 
 
-def calculate_monthly_eia_values(start_date,
-                                 end_date,
-                                 consumption_factor_values,
-                                 consumption_type: str):
-
-    pass
-
-
-def calculate_consumption_factor_via_weather(start_date,
-                                             end_date,
-                                             weather_normal,
-                                             weather_values):
-
-
-    pass
-
-def create_daily_eia_via_weather(eia_monthly_value,
-                                start_date,
-                                end_date,
-                                consumption_factor):
-    """
-    Given an eia_monthly_value such as accumulated consumption in a particular month
-    and given the consumption_factor. On the basis of the consumption factor, form
-    the daily values that aggregate up to the eia monthly value.
-    """
-
-    pass
-
-
 def create_weather_values(start_date,
                           end_date,
                           current_date,
@@ -597,8 +568,6 @@ def calculate_eia_daily_values(start_date: str,
         Likewise, c_d <= etd.
 
     """
-
-    upload_weather_df_to_s3_bucket(df)
 
     #################################################################
     ################# CHECK PRECONDITIONS ###########################

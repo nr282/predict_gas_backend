@@ -36,6 +36,7 @@ def calculate_daily_natural_gas_consumption_values() -> str:
     # Use request.args.get() to safely pull values (returns None if missing)
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
+    current_date = request.args.get('current_date')
     state = request.args.get('state')
 
     daily_values = calculate_eia_daily_values(start_date,
@@ -44,7 +45,7 @@ def calculate_daily_natural_gas_consumption_values() -> str:
                                               "2025-09-30",
                                               "2019-01-01",
                                               "2022-12-31",
-                                              "2025-09-30",
+                                              current_date,
                                               ComponentType.RESIDENTIAL,
                                               state)
 

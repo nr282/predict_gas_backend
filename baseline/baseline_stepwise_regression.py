@@ -671,7 +671,14 @@ def calculate_eia_daily_values_with_params(eia_monthly_values,
             import logging
             logging.info(f"Date is provided by: {date}. The value is provided by {daily_value}")
             raise ValueError(f"Daily Value is NaN or 0 for date: {date}")
+
+        if type(daily_value) != float and type(daily_value) != np.float64:
+            if type(daily_value) == np.ndarray:
+                daily_value = daily_value[0]
+
         date_to_value[date] = daily_value
+
+
 
     result = pd.DataFrame.from_dict({"Date": [key for key in date_to_value],
                                      "Value": [date_to_value[key] for key in date_to_value]})

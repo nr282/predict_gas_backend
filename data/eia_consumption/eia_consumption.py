@@ -44,7 +44,6 @@ import calendar
 import matplotlib.pyplot as plt
 from data.eia_consumption.global_configurations import working_directory_location
 from ..weather import get_weather_data
-import boto3
 from io import StringIO
 
 
