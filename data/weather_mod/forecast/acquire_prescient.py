@@ -218,9 +218,3 @@ def get_weather_data_for_all_states(init_date: str, degree_day_type: str):
         state_df = get_weather_data_for_state(init_date, abbrv, degree_day_type)
         df = pd.concat([df, state_df])
     return df
-
-
-if __name__ == "__main__":
-
-    df = get_weather_data_for_all_states("2025-02-01", "popcdd")
-

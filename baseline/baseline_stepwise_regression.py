@@ -180,21 +180,6 @@ def calculate_consumption_factor_to_eia_sensitivity_monthly_step_wise_on_consump
     else:
         raise RuntimeError("Insufficient data to calculate sensitivity. Too many nans")
 
-    working_path = get_base_path()
-    if os.path.exists(os.path.join(working_path)):
-        try:
-            comparison.to_csv(os.path.join(working_path,
-                                           "calibration_datasets",
-                                           f"{state}_{component_type}_monthly_comparison.csv"))
-        except:
-            pass
-
-    comparison.plot(x="diff_consumption_factor", y="diff_eia", kind="scatter")
-    try:
-        plt.savefig(f"{state}_{component_type}_diff.png")
-    except:
-        pass
-
     params = dict()
 
     # Add comparison regression.
@@ -279,20 +264,7 @@ def calculate_consumption_factor_to_eia_sensitivity_monthly_step_wise_on_month(e
     else:
         raise RuntimeError("Insufficient data to calculate sensitivity. Too many nans")
 
-    working_path = get_base_path()
-    if os.path.exists(os.path.join(working_path)):
-        try:
-            comparison.to_csv(os.path.join(working_path,
-                                           "calibration_datasets",
-                                           f"{state}_{component_type}_monthly_comparison.csv"))
-        except:
-            pass
 
-    comparison.plot(x="diff_consumption_factor", y="diff_eia", kind="scatter")
-    try:
-        plt.savefig(f"{state}_{component_type}_diff.png")
-    except:
-        pass
 
     params = dict()
 
