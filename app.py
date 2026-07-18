@@ -17,12 +17,11 @@
 import signal
 import sys
 from types import FrameType
-
+from baseline.baseline import calculate_eia_daily_values, ComponentType
 from flask import Flask, request, jsonify
 
 from utils.logging import logger
-from variational_framework.daily_cash_flow import calculate_daily_cash_flow
-import pandas as pd
+
 app = Flask(__name__)
 
 
@@ -35,45 +34,21 @@ def calculate_cash_flows() -> str:
     logger.info(logField="custom-entry", arbitraryField="custom-entry")
 
     # Use request.args.get() to safely pull values (returns None if missing)
-    values = request.args.get('values')
-    start_quarter = request.args.get('start_quarter')
-    wacc_quarterly = request.args.get('wacc')
-    wacc_quarterly = float(wacc_quarterly)
-    wacc_daily = (1 + wacc_quarterly) ** (1/91.25) - 1
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    state = request.args.get('state')
 
-    print("Values are provided by")
-    print(values)
+    daily_values = calculate_eia_daily_values(start_date,
+                                              end_date,
+                                              "2023-01-01",
+                                              "2025-09-30",
+                                              "2019-01-01",
+                                              "2022-12-31",
+                                              "2025-09-30",
+                                              ComponentType.RESIDENTIAL,
+                                              state)
 
-    print("Begin Quarter: ")
-    print(start_quarter)
-
-    values = [float(val) for val in values.split(",")]
-
-    n = len(values)
-    quarters = pd.period_range(start=start_quarter, periods=n, freq="Q-DEC")
-    dates = quarters.to_timestamp()
-
-    data = pd.DataFrame.from_dict({"Date": dates, "Quarters": quarters, "Value": values})
-    data["quarter_number"] = range(len(quarters))
-    data["quarter_discount"] = data["quarter_number"].apply(lambda qn: (1-wacc_quarterly)**qn)
-    data["quarter_discounted"] = data.apply(lambda row: row["quarter_discount"] * row["Value"], axis=1)
-    quarterly_dcf = data["quarter_discounted"].sum()
-
-    result = calculate_daily_cash_flow(data)
-    result["wacc_quarterly"] = wacc_quarterly
-    result["wacc_daily"] = wacc_daily
-    result["day_number"] = range(len(result))
-    #Interet rate:
-    #(1 - ((1 + 0.1) ** (1/91.25) - 1))^90
-
-    result["discount"] = result["day_number"].apply(lambda dn: (1-wacc_daily)**dn)
-    result["discounted_cash"] = result.apply(lambda row: row["discount"] * row["Value"], axis=1)
-    dcf = result["discounted_cash"].sum()
-    result["advanced_dfc_value"] = dcf
-    result["quarterly_dcf"] = quarterly_dcf
-
-
-    res = result.to_dict()
+    res = daily_values.to_dict()
     return res
 
 
