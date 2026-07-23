@@ -274,9 +274,9 @@ def calculate_consumption_factor_to_eia_sensitivity_monthly_step_wise_on_month(e
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
     #res = stats.linregress(X_train, y_train, raise=True)
-    res = LinearRegression(fit_intercept=True).fit(X_train[:, np.newaxis], y_train[:, np.newaxis])
+    res = LinearRegression(fit_intercept=False).fit(X_train[:, np.newaxis], y_train[:, np.newaxis])
 
-    global_slope, global_intercept = res.coef_[0,0], res.intercept_[0]
+    global_slope, global_intercept = res.coef_[0,0], res.intercept_
     global_rvalue = res.score(X_train[:, np.newaxis], y_train[:, np.newaxis])
     y_predict = global_intercept + global_slope * X_test
 
@@ -311,9 +311,9 @@ def calculate_consumption_factor_to_eia_sensitivity_monthly_step_wise_on_month(e
             logging.info(f"Number of datapoints for testing {month} is: {len(X_test)}")
 
             # res = stats.linregress(X_train, y_train, raise=True)
-            res = LinearRegression(fit_intercept=True).fit(X_train[:, np.newaxis], y_train[:, np.newaxis])
+            res = LinearRegression(fit_intercept=False).fit(X_train[:, np.newaxis], y_train[:, np.newaxis])
             rvalue = res.score(X_train[:, np.newaxis], y_train[:, np.newaxis])
-            month_slope, month_intercept = res.coef_[0,0], res.intercept_[0]
+            month_slope, month_intercept = res.coef_[0,0], res.intercept_
             y_predict = month_intercept + month_slope * X_test
 
             error = np.sum(np.abs(y_test - y_predict))
@@ -1191,12 +1191,16 @@ def calculate_eia_daily_values(start_date: str,
 
 if __name__ == "__main__":
 
-    result = calculate_eia_daily_values("2009-01-01",
+    result = calculate_eia_daily_values("2020-01-01",
                                "2025-09-30",
-                               "2009-01-01",
-                               "2025-09-30",
-                               "2000-01-01",
-                               "2008-12-31",
+                               "2020-01-01",
+                               "2024-12-31",
+                               "2015-01-01",
+                               "2019-12-31",
                                "2025-09-30",
                                ComponentType.RESIDENTIAL,
                                "New York")
+
+
+    import pdb
+    pdb.set_trace()

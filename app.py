@@ -49,12 +49,23 @@ def calculate_daily_natural_gas_consumption_values():
     print("Current date")
     print(current_date)
 
+    #result = calculate_eia_daily_values("2020-01-01",
+    #                           "2025-09-30",
+    #                           "2020-01-01",
+    #                           "2024-12-31",
+    #                           "2015-01-01",
+    #                           "2019-12-31",
+    #                           "2025-09-30",
+    #                           ComponentType.RESIDENTIAL,
+    #                           "New York")
+
+
     daily_values = calculate_eia_daily_values(start_date,
                                               end_date,
-                                              "2009-01-01",
-                                              "2025-09-30",
-                                              "2000-01-01",
-                                              "2008-12-31",
+                                              "2020-01-01",
+                                              "2024-12-31",
+                                              "2015-01-01",
+                                              "2019-12-31",
                                               current_date,
                                               ComponentType.RESIDENTIAL,
                                               state)
