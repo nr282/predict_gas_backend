@@ -571,10 +571,11 @@ def calculate_eia_daily_values_with_params(eia_monthly_values,
         params = dict()
         params["slope"] = slope
         params["intercept"] = intercept
+        eia_monthly_values_for_month = None
         if is_between(date, eia_start_date, eia_end_date):
             eia_monthly_values_for_month = eia_monthly_values.query(f"Month == {month} and Year == {year}")
             if len(eia_monthly_values_for_month) == 1:
-                eia_monthly_value = float(eia_monthly_values[state].iloc[0])
+                eia_monthly_value = float(eia_monthly_values_for_month[state].iloc[0])
                 if np.isnan(eia_monthly_value):
 
                     predicted_eia_monthly_value = (params["slope"] * weather_values_for_month["diff"].sum()
@@ -602,7 +603,7 @@ def calculate_eia_daily_values_with_params(eia_monthly_values,
                 raise ValueError(f"EIA Monthly Values: There are no values for month: {month} and year: {year}")
             else:
                 print(f"EIA Monthly Values: There are more than one: {eia_monthly_values}")
-                eia_monthly_value = float(eia_monthly_values[state].iloc[0])
+                eia_monthly_value = float(eia_monthly_values_for_month[state].iloc[0])
 
                 if np.isnan(eia_monthly_value):
                     predicted_eia_monthly_value = (params["slope"] * weather_values_for_month["diff"].sum()
@@ -1158,9 +1159,6 @@ def calculate_eia_daily_values(start_date: str,
                                                             component_type,
                                                             sensitivity_function)
 
-    daily_eia_values["Value"] = daily_eia_values["Value"].ewm(com=3).mean()
-
-
     ####################################################################################################################
     ################################################# Build PredictGasResult ###########################################
 
@@ -1200,7 +1198,3 @@ if __name__ == "__main__":
                                "2025-09-30",
                                ComponentType.RESIDENTIAL,
                                "New York")
-
-
-    import pdb
-    pdb.set_trace()
